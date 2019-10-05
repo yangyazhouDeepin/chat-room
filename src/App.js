@@ -57,7 +57,7 @@ class App extends Component {
               {this.getComp()}
             </Sider>
             <Content>
-
+        
             </Content>
           </Layout>
         </Content>
