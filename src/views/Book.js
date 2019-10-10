@@ -1,21 +1,21 @@
-import React, { Component } from 'react'
+// 通讯录
+import React, {Component} from 'react'
 import {withRouter, Route} from 'react-router-dom'
 import User from '@/components/User'
-import { Input, Layout } from 'antd'
 import ChatDetail from '@/views/ChatDetail'
+import {Input, Layout} from 'antd'
 const {Sider, Content} = Layout
-const { Search } = Input
+const {Search} = Input
 
-class ChatPage extends Component {
+class Book extends Component {
   constructor(props) {
     super(props);
     this.state = {
       users: new Array(20).fill(1),
       activeUser: ''
     }
-    this.handleSelected = this.handleSelected.bind(this)
   }
-  render() { 
+  render() {
     return (
       <Layout className="sub-layout">
         <Sider
@@ -32,7 +32,7 @@ class ChatPage extends Component {
           </div>
         </Sider>
         <Content>
-          <Route path={`/chat/:userId`}>
+          <Route path={`/book/:userId`}>
             <ChatDetail />
           </Route>
         </Content>
@@ -42,7 +42,7 @@ class ChatPage extends Component {
 
   componentDidMount() {
     if (this.props.location.pathname) {
-      let userID = this.props.location.pathname.split('/chat/')[1]
+      let userID = this.props.location.pathname.split('/book/')[1]
       this.setState({
         activeUser: Number(userID)
       })
@@ -65,4 +65,4 @@ class ChatPage extends Component {
   }
 }
  
-export default withRouter(ChatPage);
+export default withRouter(Book);

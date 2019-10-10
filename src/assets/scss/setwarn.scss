@@ -1,0 +1,47 @@
+.set-warn {
+  .warn-container {
+    width: 464px;
+    margin: 60px auto 0;
+    .warn-type {
+      margin-bottom: 10px;
+    }
+    .warn-item {
+      border: 1px solid $borderColor;
+      overflow: hidden;
+      padding-left: 108px;
+      position: relative;
+      background: #fff;
+      .left {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 108px;
+        text-align: center;
+        padding-top: 12px; 
+      }
+      .right {
+        border-left: 1px solid $borderColor;
+      }
+      .item {
+        line-height: 42px;
+        border-bottom: 1px solid $borderColor;
+        padding-left: 18px;
+        color: $fc1;
+        font-size: 14px;
+        &.disabled {
+          color: $fc3;
+        }
+        &:last-child {
+          border: none;
+        }
+      }
+    }
+    .bottom {
+      text-align: center;
+      margin-top: 22px;
+      .cancel {
+        margin-right: 10px;
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+.set-page {
+  .user-detail {
+    overflow: hidden;
+    margin-bottom: 30px;
+    .logo {
+      float: left;
+      width: 40px;
+      height: 40px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      margin-left: 15px;
+    }
+    .detail {
+      float: left;
+      margin-left: 10px;
+      .name {
+        color: $fc1;
+        font-size: 14px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 130px;
+        line-height: 1;
+        margin: 4px 0;
+      }
+      span {
+        color: $fc3;
+        font-size: 12px;
+      }
+    }
+  }
+  .set-navs {
+    .set-nav {
+      padding: 0 40px;
+      line-height: 40px;
+      transition: .2s ease;
+      box-sizing: border-box;
+      cursor: pointer;
+      background-repeat: no-repeat;
+      background-position: 15px center;
+      background-size: 20px 20px;
+      &.active {
+        background-color: $itemBlue;
+        border-top: 1px solid $borderBlue;
+        border-bottom: 1px solid $borderBlue;
+      }
+      &.warn {
+        background-image: url('~@/assets/images/icon_set.png')
+      }
+      &.edit {
+        background-image: url('~@/assets/images/icon_change.png')
+      }
+    }
+  }
+}

@@ -1,0 +1,177 @@
+.chat-detail {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid $borderColor;
+  position: relative;
+  .chat-header {
+    height: 60px;
+    line-height: 60px;
+    box-sizing: border-box;
+    padding-left: 66px;
+    border-bottom: 1px solid $borderColor;
+    background-repeat: no-repeat;
+    background-size: 40px 40px;
+    background-position: 16px center;
+    background-image: url('~@/assets/images/40x40/images/40_A_02.jpg');
+    .name {
+      color: #333;
+      font-size: 14px;
+      margin-right: 20px;
+    }
+    .remark {
+      font-size: 12px;
+      color: #666;
+      cursor: pointer;
+      i {
+        display: inline-block;
+        font-size: 16px;
+        vertical-align: middle;
+        margin-right: 4px;
+        transform: translateY(-2px)
+      }
+    }
+  }
+
+  .chat-container {
+    flex: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding-top: 10px;
+    .user-item {
+      background-repeat: no-repeat;
+      background-size: 36px 36px;
+      margin-bottom: 10px;
+      &.active {
+        .text-container {
+          background-color: #e2dc9b;
+          &:after {
+            border-color: #e2dc9b;
+          }
+        }
+      }
+    }
+
+    .text-container {
+      font-size: 12px;
+      color: #333;
+      line-height: 20px;
+      box-sizing: border-box;
+      border-radius: 2px;
+      padding:8px 12px;
+      max-width: calc(100% - 62px);
+      position: relative;
+      transition: .2s ease;
+      display: inline-block;
+      text-align: left;
+      &:after {
+        content: '';
+        border-left: 6px solid #a1daff;
+        border-top: 6px solid transparent!important;
+        border-bottom: 6px solid transparent!important;
+        position: absolute;
+        right: -6px;
+        top: 12px;
+        transition: .2s ease;
+      }
+    }
+    .other {
+      text-align: left;
+      padding-left: 62px;
+      background-position: 16px top;
+      .text-container {
+        background: #fff;
+        &:after {
+          border-left: none;
+          border-right: 6px solid #fff;
+          left: -6px;
+          right: auto;
+
+        }
+      }
+    }
+    .self {
+      text-align: right;
+      padding-right: 62px;
+      background-position: right 16px top;
+      overflow: hidden;
+      .text-container {
+        background-color: #a1daff;
+        float: right;
+      }
+    }
+  }
+  .send-msg {
+    height: 44px;
+    border-top: 1px solid $borderColor;
+    line-height: 44px;
+    background: #FFF;
+    display: flex;
+    .upload-file {
+      display: inline-block;
+      width: 44px;
+      text-align: center;
+      font-size: 24px;
+      text-align: center;
+      cursor: pointer;
+      color: #9b9b9b;
+    }
+    input {
+      flex: 1;
+      outline: none;
+      border: none;
+    }
+    .emoji {
+      width: 40px;
+      font-size: 20px;
+      text-align: center;
+      color: #9b9b9b;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .send {
+      width: 98px;
+      color: #fff;
+      text-align: center;
+      font-size: 14px;
+      background: #5091fe;
+      cursor: pointer;
+      transition: .2s ease;
+      &:hover {
+        opacity: .8;
+      }
+    }
+  }
+  .multiple-header {
+    height: 60px;
+    line-height: 60px;
+    background-color: #ededed;
+    box-sizing: border-box;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0 16px;
+    .cancel-multiple {
+      float: right;
+      width: 90px;
+      text-align: center;
+      line-height: 36px;
+      border-radius: 2px;
+      color: #fff;
+      background: #999;
+      cursor: pointer;
+      margin-top: 12px;
+      &:hover {
+        opacity: .8;
+      }
+    }
+
+  }
+}
+.show {
+  display: block;
+}
+.hide {
+  display: none;
+}

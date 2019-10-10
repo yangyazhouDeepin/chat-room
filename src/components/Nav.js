@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import {withRouter} from 'react-router-dom'
+
 class Nav extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class Nav extends Component {
       return (
         <div
           key={nav.title}
-          onClick={e => this.change(idx)}
+          onClick={e => this.change(idx, nav)}
           className={`nav-item ${nav.icon} ${ this.props.navIndex === idx ? "active" : '' }`}
         >
           {nav.title}
@@ -26,9 +28,10 @@ class Nav extends Component {
     })
   }
 
-  change(idx) {
+  change(idx, nav) {
     this.props.changeIndex(idx)
+    this.props.history.push(nav.link)
   }
 }
  
-export default Nav;
+export default withRouter(Nav);

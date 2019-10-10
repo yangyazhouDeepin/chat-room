@@ -1,0 +1,82 @@
+.set-user {
+  width: 464px;
+  margin: 60px auto 0;
+  p {
+    margin: 0
+  }
+  .nickname, .set-img, .tg {
+    background: #fff;
+    position: relative;
+    border: 1px solid $borderColor;
+    padding-left: 88px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    .title {
+      position: absolute;
+      left: 0;
+      top: 0;
+      line-height: 40px;
+      padding-left: 16px;
+    }
+  }
+  .nickname {
+    input {
+      border: none;
+      outline: none;
+      line-height: 40px;
+    }
+  }
+  .set-img {
+    padding-top: 10px;
+    .img-list {
+      height: 210px;
+      overflow-y: auto;
+      .item {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        margin: 0 10px 14px 0;
+        background: $btnGray;
+        cursor: pointer;
+        position: relative;
+        &.active:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 29px;
+          height: 26px;
+          background: url('~@/assets/images/choose_icon.png') no-repeat;
+          background-size: contain;
+        }
+      }
+    }
+  }
+  .tg {
+    padding-top: 14px;
+    padding-bottom: 16px;
+    padding-right: 12px;
+    overflow: hidden;
+    .qrcode {
+      float: left;
+      width: 64px;
+      height: 64px;
+      background: #666;
+    }
+    .address {
+      float: right;
+      width: 270px;
+      word-break: break-all;
+      margin-bottom: 12px;
+      font-size: 12px;
+      button {
+        border: none;
+        outline: none;
+        background: none;
+        &:hover {
+          opacity: .8;
+        }
+      }
+    }
+  }
+}

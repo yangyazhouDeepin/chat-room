@@ -1,0 +1,25 @@
+.message-detail {
+  background: #fff;
+  height: 100%;
+  border-left: 1px solid $borderColor;
+  display: flex;
+  flex-direction: column;
+  &-header {
+    height: 86px;
+    box-sizing: border-box;
+    padding: 28px 16px 18px;
+    border-bottom: 1px solid $borderColor;
+    h3 {
+      font-size: 18px;
+      color: $fc1;
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+  }
+  .msg-detail {
+    flex: 1;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 16px;
+  }
+}

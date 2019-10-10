@@ -1,0 +1,40 @@
+.message-list {
+  .message-item {
+    box-sizing: border-box;
+    height: 55px;
+    border-bottom: 1px solid $borderColor;
+    padding: 10px;
+    padding-top: 6px;
+    color: $fc2;
+    cursor: pointer;
+    &.unread {
+      color: $fc1;
+      position: relative;
+      &:after {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: #f43f00;
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+      }
+      .title {
+        color: $fc1;
+      }
+    }
+    .title {
+      font-size: 14px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      line-height: 1.4;
+      color: $fc2;
+      margin-bottom: 4px;
+    }
+    .time {
+      font-size: 12px;
+    }
+  }
+}

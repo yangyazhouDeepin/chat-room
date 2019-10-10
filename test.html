@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+  <div class="copy-img">
+    <div>
+      <img class="zf-img" src="src/assets/images/big_assistant.png" alt="">
+    </div>
+    <a id="link" href="#">复制图片</a>
+  </div>
+
+  <script>
+    function getSelect (targetNode) {
+    if (window.getSelection) {
+        //chrome等主流浏览器
+        var selection = window.getSelection();
+        var range = document.createRange();
+        range.selectNode(targetNode);
+        selection.removeAllRanges();
+        selection.addRange(range);
+      } else if (document.body.createTextRange) {
+        //ie
+        var range = document.body.createTextRange();
+        range.moveToElementText(targetNode);
+        range.select();
+      }
+}
+ 
+    //复制图片
+    var copyImage = document.getElementById("link");
+    copyImage.onclick = function(e){
+        getSelect($('.zf-img')[0])
+        document.execCommand('copy')
+        alert('复制图片成功');
+    }
+  </script>
+</body>
+</html>
