@@ -152,6 +152,7 @@
     left: 0;
     top: 0;
     padding: 0 16px;
+    transform: translateY(-100%);
     .cancel-multiple {
       float: right;
       width: 90px;
@@ -166,7 +167,6 @@
         opacity: .8;
       }
     }
-
   }
 }
 .show {

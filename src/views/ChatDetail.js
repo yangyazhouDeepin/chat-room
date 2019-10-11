@@ -5,7 +5,8 @@ import '@/assets/scss/chatdetail.scss'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
 import util from '@/util/util'
-import axios from 'axios'
+import {getChatList, addChat, delChat} from '@/http'
+import {CSSTransition} from 'react-transition-group'
 
 class ChatDetail extends Component {
   constructor(props) {
@@ -33,15 +34,9 @@ class ChatDetail extends Component {
       // 是否是多选
       isMultiple: false,
       multipleList: [],
-      mock: []
+      mock: [],
+      animateClass: ''
     }
-
-    this.textInput = React.createRef()
-    // 聊天容器元素
-    this.containerEl = React.createRef()
-    // 聊天列表元素
-    this.chatListEl = React.createRef()
-
 
     let methods = [
       'handleEdit',
@@ -64,7 +59,7 @@ class ChatDetail extends Component {
   }
   render() {
     return (
-      <div className="chat-detail" onMouseUp={this.handleBoxClick} key={this.props.location.pathname}>
+      <div className="chat-detail" onMouseUp={this.handleBoxClick}>
         <div className="chat-header">
           <span className="name">王军</span>
           <span className="remark" onClick={this.showModal}>
@@ -72,8 +67,8 @@ class ChatDetail extends Component {
             备注
           </span>
         </div>
-        <div className="chat-container" ref={this.containerEl}>
-          <div className="chat-list" ref={this.chatListEl}>
+        <div className="chat-container" ref={(el) => this.containerEl = el}>
+          <div className="chat-list" ref={(el) => this.chatListEl = el}>
             {this.getChatList()}
           </div>
         </div>
@@ -81,7 +76,7 @@ class ChatDetail extends Component {
           <span className="upload-file">
             <Icon type="plus-circle" />
           </span>
-          <input type="text" onKeyUp={this.handleMsgEnter} ref={this.textInput} onChange={this.handleMsgChange} value={this.state.msg} className="msg"/>
+          <input type="text" onKeyUp={this.handleMsgEnter} ref={(el) => this.textInput = el} onChange={this.handleMsgChange} value={this.state.msg} className="msg"/>
           <span className={`emoji ${this.state.emojiActive ? 'emoji-span-active' : ''}`} onClick={this.showEmoji}>
             <Icon type="smile" />
           </span>
@@ -139,38 +134,36 @@ class ChatDetail extends Component {
           <div className="item" onClick={() => this.handleDelMsg(2)}>清空聊天记录</div>
         </div>
         <Picker set='google' emoji='point_up' style={this.state.emojiStyle} onSelect={(emoji, ev) => this.selectEmoji(emoji, ev)}/>
-        <div className={`multiple-header ${this.state.isMultiple && this.state.multipleList.length ? 'show' : 'hide'}`} >
-          <Button type="primary" onClick={this.delMultiple}>删除{this.state.multipleList.length}条</Button>
-          <span className="cancel-multiple" onClick={this.cancelMultiple}>取消</span>
-        </div>
+        <CSSTransition
+          in={this.state.isMultiple && this.state.multipleList.length > 0}
+          timeout={0}
+          onEnter={() => this.setState({animateClass: 'fadeInDown'})}
+          onExited={() => this.setState({animateClass: 'fadeOutUp'})}
+        >
+          <div className={`multiple-header animated ${this.state.animateClass}`} >
+            <Button type="primary" onClick={this.delMultiple}>删除{this.state.multipleList.length}条</Button>
+            <span className="cancel-multiple" onClick={this.cancelMultiple}>取消</span>
+          </div>
+        </CSSTransition>
       </div>
     );
   }
 
   componentDidMount() {
     this.getData()
-  }
 
-  // 路由发生改变时,获取新的参数数据
-  componentDidUpdate(newProps) {
-    // console.log(newProps.match.params.id)
-    this.getData()
   }
 
   getData() {
-    axios.get('http://localhost:2333/api/chat/chatList')
+    getChatList()
       .then(res => {
         this.setState((preState) => {
           return {
-            mock: res.data
+            mock: res.data.data
           }
         }, () => {
           this.scrollBottom(this.containerEl, this.chatListEl)
         })
-      })
-      .catch(err => {
-        console.log(err)
-        message.error('请求失败,请联系管理员')
       })
   }
 
@@ -264,7 +257,7 @@ class ChatDetail extends Component {
         msg: val
       }
     }, () => {
-      this.textInput.current.focus()
+      this.textInput.focus()
     })
   }
 
@@ -301,27 +294,24 @@ class ChatDetail extends Component {
       return message.error('请输入发送内容!')
     }
     // 随机判断为自己还是对方
-    let random = Number(Math.random().toFixed(4)) * 1000 % 2
-    console.log(random)
+    let random = Number(Math.random().toFixed(1)) * 10 % 2
     let temp = {
       type: random,
       text: this.state.msg
     }
-    axios.post('http://localhost:2333/api/chat/add', {...temp})
+    addChat(temp)
       .then(res => {
         this.setState((preState) => {
           let val = preState.mock
-          val.push(res.data)
+          temp._id = res.data.data._id
+          val.push(temp)
           return {
             mock: val,
             msg: ''
           }
         }, () => {
-          this.scrollBottom(this.containerEl.current, this.chatListEl.current)
+          this.scrollBottom(this.containerEl, this.chatListEl)
         })
-      })
-      .catch(err => {
-        console.log(err)
       })
   }
 
@@ -347,20 +337,26 @@ class ChatDetail extends Component {
   delMsg(dels) {
     let ids = dels
     if (Array.isArray(dels)) {
-      ids = dels.map(msg => msg._id)
+      ids = dels.map(msg => msg._id).join(',')
+    } else {
+      ids = dels._id
     }
-    this.setState((preState) => {
-      let arr = preState.mock.filter(obj => {
-        if (Array.isArray(ids)) {
-          return !ids.includes(obj._id) 
-        } else if (obj._id !== ids._id) {
-          return true
-        }
+    delChat({ids})
+      .then(res => {
+        this.setState((preState) => {
+          let temp = ids.split(',')
+          let arr = preState.mock.filter(obj => {
+            if (temp.length > 1) {
+              return !temp.includes(obj._id) 
+            } else if (obj._id !== ids) {
+              return true
+            }
+          })
+          return {
+            mock: arr
+          }
+        })
       })
-      return {
-        mock: arr
-      }
-    })
   }
 
   handleDelete(ev, msg) {
@@ -403,4 +399,4 @@ class ChatDetail extends Component {
 
 }
  
-export default withRouter(ChatDetail)
+export default ChatDetail

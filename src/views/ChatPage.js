@@ -33,7 +33,7 @@ class ChatPage extends Component {
         </Sider>
         <Content>
           <Route path={`/chat/:userId`}>
-            <ChatDetail />
+            <ChatDetail key={this.props.location.pathname} />
           </Route>
         </Content>
       </Layout>
