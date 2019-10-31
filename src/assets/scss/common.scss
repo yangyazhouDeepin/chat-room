@@ -18,3 +18,25 @@
     opacity: .8;
   }
 }
+
+.mass-message {
+  border-radius: 2px;
+  border: 1px solid #d7e2e9;
+  box-sizing: border-box;
+  line-height: 38px;
+  text-align: center;
+  margin-top: 10px;
+  background: url('~@/assets/images/button_qf.png') no-repeat;
+  background-size: 32px 23px;
+  background-position: 34px center;
+  cursor: pointer;
+}
+
+.link {
+  color: $blue;
+  cursor: pointer;
+  transition: .2s ease;
+  &:hover {
+    opacity: .8;
+  }
+}

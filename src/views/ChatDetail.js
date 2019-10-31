@@ -1,6 +1,5 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import { Icon, Modal, Button, message, Radio } from 'antd'
-import {withRouter} from 'react-router-dom'
 import '@/assets/scss/chatdetail.scss'
 import 'emoji-mart/css/emoji-mart.css'
 import { Picker } from 'emoji-mart'
@@ -351,6 +350,7 @@ class ChatDetail extends Component {
             } else if (obj._id !== ids) {
               return true
             }
+            return false
           })
           return {
             mock: arr

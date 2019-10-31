@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {withRouter} from 'react-router-dom'
+import {withRouter, NavLink} from 'react-router-dom'
 
 class Nav extends Component {
   constructor(props) {
@@ -17,13 +17,13 @@ class Nav extends Component {
   getNavList() {
     return this.props.navList.map((nav, idx) => {
       return (
-        <div
+        <NavLink
+          className={`nav-item ${nav.icon}`}
           key={nav.title}
-          onClick={e => this.change(idx, nav)}
-          className={`nav-item ${nav.icon} ${ this.props.navIndex === idx ? "active" : '' }`}
+          to={nav.link}
         >
           {nav.title}
-        </div>
+        </NavLink>
       )
     })
   }

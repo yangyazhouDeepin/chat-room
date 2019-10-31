@@ -4,8 +4,10 @@ import {withRouter, Route} from 'react-router-dom'
 import User from '@/components/User'
 import ChatDetail from '@/views/ChatDetail'
 import {Input, Layout} from 'antd'
+import util from '@/util/util'
 const {Sider, Content} = Layout
 const {Search} = Input
+
 
 class Book extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class Book extends Component {
       users: new Array(20).fill(1),
       activeUser: ''
     }
+    util.bindMethod(this, ['handleSelected'])
   }
   render() {
     return (
@@ -55,7 +58,7 @@ class Book extends Component {
 
   handleSelected(idx) {
     let path = {
-      pathname: '/chat/' + idx,
+      pathname: '/book/' + idx,
       state: idx
     }
     this.props.history.push(path)
