@@ -29,14 +29,14 @@
   .set-img {
     padding-top: 10px;
     .img-list {
-      height: 210px;
+      height: 216px;
       overflow-y: auto;
       .item {
         display: inline-block;
         width: 40px;
         height: 40px;
         margin: 0 10px 14px 0;
-        background: $btnGray;
+        background-color: #ededed;
         cursor: pointer;
         position: relative;
         &.active:after {

@@ -17,5 +17,5 @@ export default {
         break
       default: return ''
     }
-  }
+  },
 }

@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import '@/assets/scss/masshistory.scss'
 import {withRouter} from 'react-router-dom'
 import {Modal} from 'antd'
+import dayjs from 'dayjs'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 
 class MassHistory extends Component {
   constructor(props) {
@@ -10,37 +13,60 @@ class MassHistory extends Component {
       visible: false
     }
   }
-  render() { 
+
+  getHistory = () => {
+    let massId = this.props.match.params.id
+    return this.props.massList.filter(mass => (mass.id === massId || mass.tempId === massId))[0] || null
+  }
+
+  getNameById = (fid) => {
+    let obj = this.props.list[fid] || {}
+    return obj.descName || obj.platAccount
+  }
+
+  sendAgain = () => {
+    this.props.history.push({
+      pathname: '/chat/mass',
+      state: {
+        ids: (this.getHistory() || {}).sendUserIds || []
+      }
+    })
+  }
+
+  render() {
+    const chat = this.getHistory()
+    const reads = chat ? chat.readUserIds.map(rid => {
+      let name = this.getNameById(rid)
+      return <div key={rid} className="recipient-item item">{name}</div>
+    }) : []
     return (
       <div className="mass-history">
         <div className="mass-history-header">
           群发历史
-          <span className="time">2019-9-10 19:02:13</span>
+          <span className="time">{chat && dayjs(Number(chat.createDate)).format('YYYY-MM-DD HH:mm:ss')}</span>
         </div>
         <div className="mass-history-main">
           <div className="container">
             <div className="recipients">
-              <p className="m-b-10">8名收件人：</p>
+              <p className="m-b-10">{chat && chat.sendUserIds.length}名收件人：</p>
               <div className="recipient-list">
                 <div className="recipient-box">
-                  <span className="recipient-item">ittest093</span>
-                  <span className="recipient-item">ittest093</span>
-                  <span className="recipient-item">ittest093</span>
-                  <span className="recipient-item">ittest093</span>
-                  <span className="recipient-item">ittest093</span>
+                  {chat && chat.sendUserIds.slice(0, 4).map(item => {
+                    let name = this.getNameById(item)
+                    return <span key={item} className="recipient-item">{name}</span>}
+                  )}
                 </div>
-                <span className="more link" onClick={() => this.setState({visible: true})}>更多</span>
+                {
+                  chat && chat.sendUserIds.length > 4 ? <span className="more link" onClick={() => this.setState({visible: true})}>更多</span> : null
+                }
+                
               </div>
             </div>
 
             <div className="mass-text">
               <p className="m-b-10">群发内容：</p>
-              <div className="text">
-                我将彩票返点提高为。。。<br/>
-                将三方返水提高为。。。<br/><br/>
-                有疑问可直接私聊
-              </div>
-              <div className="self-btn m-auto" onClick={() => this.props.history.push('/chat/mass')}>再发一条</div>
+              <div className="text" dangerouslySetInnerHTML={{__html: chat ? chat.content : ''}}></div>
+              <div className="self-btn m-auto" onClick={this.sendAgain}>再发一条</div>
             </div>
 
           </div>
@@ -49,11 +75,9 @@ class MassHistory extends Component {
           <p className="m-b-10">已读人员：</p>
           <div className="recipient-list">
             <div className="recipient-box">
-              <span className="recipient-item">ittest093</span>
-              <span className="recipient-item">ittest093</span>
-              <span className="recipient-item">ittest093</span>
+              {reads.slice(0, 2)}
             </div>
-            <span className="more link" onClick={() => this.setState({visible: true})}>更多</span>
+            {reads.length > 2 ? <span className="more link" onClick={() => this.setState({visible: true})}>更多</span> : null}
           </div>
         </div>
 
@@ -70,16 +94,7 @@ class MassHistory extends Component {
               <h3>全部已读</h3>
             </div>
             <div className="container">
-              <div className="item">ittest01</div>
-              <div className="item">ittest01</div>
-              <div className="item">ittest01</div> 
-              <div className="item">ittest01</div>
-              <div className="item">ittest01</div>
-              <div className="item">ittest01</div>
-              <div className="item">ittest01</div>
-              <div className="item">ittest01</div>
-              <div className="item">ittest01</div>
-              <div className="item">ittest01</div>
+              {reads}
             </div>
           </div>
         </Modal>
@@ -88,5 +103,15 @@ class MassHistory extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    massList: state.chatList.massList,
+    list: state.chatList.list
+  }
+}
  
-export default withRouter(MassHistory);
+export default compose(
+  withRouter,
+  connect(mapStateToProps)
+)(MassHistory);

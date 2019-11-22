@@ -1,5 +1,6 @@
 
 @import './common.scss';
+@import './logo.scss';
 .fl {
   float: left;
 }
@@ -31,6 +32,12 @@
 .m-r-10 {
   margin-right: 10px;
 }
+.m-r-5 {
+  margin-right: 5px;
+}
+.m-l-5 {
+  margin-left: 5px;
+}
 .m-b-10 {
   margin-bottom: 10px;
 }
@@ -40,6 +47,23 @@ body,
 #root,
 .layout {
   height: 100%;
+  .new-message-mark {
+    width: 22px;
+    height: 14px;
+    line-height: 14px;
+    color: #fff;
+    font-size: 10px;
+    background-color: #f43f00;
+    text-align: center;
+    border-radius: 8px;
+  }
+  .user-item {
+    .new-message-mark {
+      position: absolute;
+      right: 10px;
+      bottom: 8px;
+    }
+  }
   .layout-sider {
     background-color: $blue;
     width: 66px!important;
@@ -58,6 +82,7 @@ body,
       cursor: pointer;
       user-select: none;
       transition: .2s ease;
+      position: relative;
       &.active {
         background-color: #e2f4ff;
         color: #1b9ff3;
@@ -91,6 +116,11 @@ body,
       }
       &.icon-reset {
         background-image: url('~@/assets/images/icon_nav05.png')
+      }
+      .new-message-mark {
+        position: absolute;
+        top: 9px;
+        right: 4px;
       }
     }
   }
@@ -130,6 +160,8 @@ body,
     display: block;
     color: $fc3;
     border-color: transparent;
+    display: block;
+    outline: none;
     &:focus {
       outline: none;
     }
@@ -164,13 +196,14 @@ body,
       .name {
         font-size: 14px;
         color: #333;
-        line-height: 26px;
+        line-height: 20px;
         margin: 0;
       }
       .last-time {
         font-size: 12px;
         line-height: 1;
         display: block;
+        margin-top: 5px;
       }
       .text {
         display: inline-block;
@@ -180,7 +213,7 @@ body,
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        line-height: 1;
+        line-height: 20px;
       }
     }
   }
@@ -213,9 +246,6 @@ body,
 }
 .default-user {
   background-image: url('~@/assets/images/40x40/images/touxiang_mr.png')
-}
-.self {
-  background-image: url('~@/assets/images/40x40/images/grey_40_A_04.jpg')
 }
 .delete-container {
   width: 160px;

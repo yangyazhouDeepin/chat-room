@@ -17,6 +17,7 @@
     "camelcase": "^5.2.0",
     "case-sensitive-paths-webpack-plugin": "2.2.0",
     "css-loader": "2.1.1",
+    "dayjs": "^1.8.17",
     "dotenv": "6.2.0",
     "dotenv-expand": "5.1.0",
     "emoji-mart": "^2.11.1",
@@ -37,6 +38,7 @@
     "jest-environment-jsdom-fourteen": "0.1.0",
     "jest-resolve": "24.9.0",
     "jest-watch-typeahead": "0.4.0",
+    "lodash": "^4.17.15",
     "mini-css-extract-plugin": "0.8.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "pnp-webpack-plugin": "1.5.0",
@@ -149,11 +151,19 @@
           "libraryDirectory": "es",
           "style": "css"
         }
+      ],
+      [
+        "@babel/plugin-proposal-decorators",
+        {
+          "legacy": true
+        }
       ]
     ]
   },
   "devDependencies": {
+    "@babel/helper-create-regexp-features-plugin": "^7.7.2",
     "babel-plugin-import": "^1.12.2",
+    "http-proxy-middleware": "^0.20.0",
     "node-sass": "^4.12.0",
     "sass-resources-loader": "^2.0.1"
   }

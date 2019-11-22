@@ -1,5 +1,7 @@
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
+import { compose } from 'redux'
+import { connect } from 'react-redux'
 import '@/assets/scss/setpage.scss'
 import SetWarn from '@/views/SetWarn'
 import SetUser from '@/views/SetUser'
@@ -24,10 +26,10 @@ class SetPage extends Component {
         >
           <div className="set-page">
             <div className="user-detail">
-              <span className="logo self"></span>
+              <span className={`logo ${this.props.user.imageId ? 'icon-logo-' + this.props.user.imageId : 'default'}`}></span>
               <div className="detail">
-                <p className="name">一介草民9077</p>
-                <span>账号:lichen1232</span>
+                <p className="name">{this.props.user.nickName || this.props.user.platAccount}</p>
+                <span>账号:{this.props.user.platAccount}</span>
               </div>
             </div>
             <div className="set-navs">
@@ -58,5 +60,14 @@ class SetPage extends Component {
     return <SetWarn />
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
  
-export default withRouter(SetPage);
+export default compose(
+  withRouter,
+  connect(mapStateToProps)
+)(SetPage);

@@ -3,34 +3,79 @@ import '@/assets/scss/setuser.scss'
 import QRCode from 'qrcode.react'
 import {CopyToClipboard} from 'react-copy-to-clipboard'
 import {message} from 'antd'
+import { connect } from 'react-redux'
+import socketParams from '../util/socketParams'
 
 class SetUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      qrUrl: ''
+      qrUrl: '',
+      imageIndex: '',
+      descName: ''
     }
-    this.copyUrl = this.copyUrl.bind(this)
   }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({
+        qrUrl: 'http://www.baidu.com'
+      })
+    }, 1000)
+    if (this.props.user.platAccount) {
+      this.setUser(this.props.user)
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.user.platAccount) {
+      this.setUser(nextProps)
+    }
+  }
+
+  setUser(obj) {
+    this.setState({
+      imageIndex: obj.imageId,
+      descName: obj.nickName
+    })
+  } 
+
+  setImageIndex = (idx) => {
+    this.setState({
+      imageIndex: idx + 1
+    })
+  }
+
+  changeNickName = (e) => {
+    this.setState({
+      descName: e.target.value
+    })
+  }
+
+  set = () => {
+    let imgChagne = this.props.user.imageId !== this.state.imageIndex
+    let nickNameChange = this.props.user.nickName !== this.state.descName
+    if (imgChagne || nickNameChange) {
+      let params = {code: 10013, data: {}}
+      if (imgChagne) params.data.imageId = this.state.imageIndex
+      if (nickNameChange) params.data.nickName = this.state.descName
+      this.props.socket.subSend(socketParams(params))
+    }
+  }
+
   render() {
     return (
       <div className="set-user">
         <div className="nickname">
           <span className="title">设置备注:</span>
-          <input type="text" placeholder="请输入昵称" />
+          <input value={this.state.descName} onChange={this.changeNickName} type="text" placeholder="请输入昵称" />
         </div>
         <div className="set-img">
           <span className="title">设置头像:</span>
-          <div className="img-list">
-            <div className="item active"></div>
-            <div className="item"></div>
-            <div className="item"></div>
-            <div className="item"></div>
-            <div className="item"></div>
-            <div className="item"></div>
-            <div className="item"></div>
-            <div className="item"></div>
-            <div className="item"></div>
+          <div className="img-list clearfix">
+            {
+              new Array(27).fill(1).map((temp, idx) => <div key={idx} onClick={() => this.setImageIndex(idx)} className={`item fl icon-logo-${idx + 1} ${this.state.imageIndex === (idx + 1) ? 'active' : ''}`}></div>)
+            }
           </div>
         </div>
         <div className="tg">
@@ -53,20 +98,19 @@ class SetUser extends Component {
             </div>
           </div>
         </div>
+        <div className="bottom t-c">
+          <span className="self-btn" onClick={this.set}>确定</span>
+        </div>
       </div>
     );
   }
+}
 
-  componentDidMount() {
-    setTimeout(() => {
-      this.setState({
-        qrUrl: 'http://www.baidu.com'
-      })
-    }, 1000)
-  }
-
-  copyUrl() {
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    socket: state.common.socket
   }
 }
- 
-export default SetUser;
+
+export default connect(mapStateToProps)(SetUser);

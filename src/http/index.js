@@ -1,14 +1,10 @@
 import http from './http'
 import apis from './api'
 
-export const getChatList = (params = {}) => {
-  return http.get(apis.getChatList, params)
+export const login = (params = {}) => {
+  return http.post(apis.login, params)
 }
 
-export const addChat = (params = {}) => {
-  return http.post(apis.addChat, {...params})
-}
-
-export const delChat = (params = {}) => {
-  return http.get(apis.delChat, {params: {...params}})
+export const strangerLogin = (params = {}) => {
+  return http.get(apis.strangerLogin, {params})
 }

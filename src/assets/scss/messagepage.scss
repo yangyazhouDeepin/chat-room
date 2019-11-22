@@ -6,7 +6,14 @@
     padding: 10px;
     padding-top: 6px;
     color: $fc2;
+    display: block;
     cursor: pointer;
+    outline: none;
+    &.active {
+      background-color: #e2f4ff;
+      border-top: 1px solid #cbe4f4;
+      border-bottom: 1px solid #cbe4f4;
+    }
     &.unread {
       color: $fc1;
       position: relative;

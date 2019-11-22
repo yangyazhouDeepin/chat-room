@@ -1,7 +1,4 @@
 import { createStore } from 'redux'
-import Reducers from './reducers'
+import reducer from './reducer'
 
-export default function configureStore(initialState) {
-  const store = createStore(Reducers, initialState, window.devToolsExtension ? window.devToolsExtension() : undefined)
-  return store
-}
+export default createStore(reducer)

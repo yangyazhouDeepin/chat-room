@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux'
-import configureStore from './store/index'
-import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import {HashRouter as Router, Route, Switch} from 'react-router-dom'
 import { Layout } from 'antd'
 import Nav from './components/Nav'
 import ChatPage from '@/views/ChatPage'
 import Book from '@/views/Book'
 import MessagePage from '@/views/MessagePage'
 import SetPage from '@/views/SetPage'
-import ExpertPage from '@/views/ExpertPage'
 
-const store = configureStore()
+import store from './store'
 
 const { Sider, Content } = Layout
 class App extends Component {
@@ -46,6 +44,14 @@ class App extends Component {
       ]
     }
   }
+
+  componentWillMount() {
+    // 禁止浏览器的右键事件
+    window.oncontextmenu = function(ev) {
+      ev.preventDefault()
+    }
+  }
+
   render() {
     return (
       <Provider store={store}>
@@ -57,6 +63,7 @@ class App extends Component {
               />
             </Sider>
             <Content>
+              
               <Switch>
                 <Route path="/chat">
                   <ChatPage />
@@ -65,7 +72,7 @@ class App extends Component {
                   <Book />
                 </Route>
                 <Route path="/expert">
-                  <ExpertPage />
+                  <MessagePage />
                 </Route>
                 <Route path="/message">
                   <MessagePage />
@@ -73,7 +80,7 @@ class App extends Component {
                 <Route path="/set">
                   <SetPage />
                 </Route>
-                <Redirect to="/chat" />
+                {/* <Redirect to="/chat" /> */}
               </Switch>
             </Content>
           </Layout>
@@ -82,12 +89,6 @@ class App extends Component {
     )
   }
 
-  componentDidMount() {
-    // 禁止浏览器的右键事件
-    window.oncontextmenu = function(ev) {
-      ev.preventDefault()
-    }
-  }
 }
 
 export default App;

@@ -1,0 +1,26 @@
+@for $i from 1 through 27 {
+  .icon-logo-#{$i} {
+    background-image: url('../images/40x40/images/user_' + $i + '.jpg');
+  }
+  .icon-logo-offline-#{$i} {
+    background-image: url('../images/40x40/images/user_offline_' + $i + '.jpg')
+  }
+}
+.default {
+  background-image: url('../images/40x40/images/touxiang_mr.png');
+}
+.default-offline {
+  background-image: url('../images/40x40/images/touxiang_mr_grey.png')
+}
+.icon-logo-superior {
+  background-image: url('../images/40x40/images/touxiang_zsgly.png');
+  &-offline {
+    background-image: url('../images/40x40/images/touxiang_zsgly_grey.png')
+  }
+}
+.icon-logo-stranger {
+  background-image: url('../images/40x40/images/touxiang_msr.png');
+  &-offline {
+    background-image: url('../images/40x40/images/touxiang_msr_grey.png')
+  }
+}

@@ -31,9 +31,6 @@
     border-bottom: 1px solid $borderColor;
     color: $fc2;
     font-size: 12px;
-    .recipient-box {
-      width: 322px;
-    }
     .mass-text {
       margin-top: 20px;
       .text {
@@ -42,6 +39,7 @@
         background: #fff;
         height: 140px;
         overflow-y: auto;
+        white-space: pre-wrap;
       }
       .self-btn {
         margin: 22px auto 0;
@@ -54,9 +52,6 @@
     padding: 0 20px;
     box-sizing: border-box;
     padding-top: 16px;
-    .recipient-box {
-      width: 175px;
-    }
   }
 
   .recipient-box {
